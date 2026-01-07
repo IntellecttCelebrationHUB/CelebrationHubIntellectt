@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Sankranthi - Team Celebration</title>
+    <title>Sankranthi Sambaralu - Team Celebration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -11,6 +11,7 @@
             --festive-orange: #f97316;
             --festive-yellow: #fbbf24;
             --festive-pink: #db2777;
+            --festive-green: #15803d;
         }
         body {
             font-family: 'Poppins', sans-serif;
@@ -24,19 +25,33 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .kite-container {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
-            transition: transform 0.2s ease-out;
-        }
+        
+        /* Animations */
         @keyframes sway {
             0%, 100% { transform: rotate(-5deg) translateY(0); }
             50% { transform: rotate(5deg) translateY(-20px); }
         }
-        .animate-sway {
-            animation: sway 4s ease-in-out infinite;
+        .animate-sway { animation: sway 4s ease-in-out infinite; }
+
+        @keyframes walk {
+            0% { transform: translateX(-20px); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(-20px); }
         }
+        .animate-walk { animation: walk 6s ease-in-out infinite; }
+
+        @keyframes peck {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+        }
+        .animate-peck { animation: peck 0.5s ease-in-out infinite; }
+
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+        .animate-jump { animation: jump 0.8s ease-in-out infinite; }
+
         .petal {
             position: fixed;
             top: -10%;
@@ -49,12 +64,14 @@
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
         }
+
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
@@ -75,37 +92,129 @@
             color: var(--festive-orange);
             font-weight: 600;
         }
-        .rangoli-pattern {
+        
+        .rangoli-bg {
             background-image: radial-gradient(#fbbf24 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.1;
+            background-size: 30px 30px;
+            opacity: 0.15;
+        }
+
+        .cultural-icon {
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
         }
     </style>
 </head>
 <body class="relative">
 
     <div id="petal-container"></div>
-    <div class="fixed inset-0 rangoli-pattern pointer-events-none"></div>
+    <div class="fixed inset-0 rangoli-bg pointer-events-none"></div>
 
     <!-- Floating Kites -->
-    <div class="kite-container top-10 left-[5%] animate-sway" id="kite-1">
+    <div class="fixed top-10 left-[5%] animate-sway z-10" id="kite-1">
         <svg width="80" height="80" viewBox="0 0 100 100" fill="none"><path d="M50 0L100 50L50 100L0 50L50 0Z" fill="#f97316"/><path d="M50 0V100M0 50H100" stroke="white" stroke-width="2"/><path d="M50 100L40 120H60L50 100Z" fill="#db2777"/></svg>
     </div>
-    <div class="kite-container top-20 right-[10%] animate-sway" style="animation-delay: -2s;" id="kite-2">
+    <div class="fixed top-20 right-[10%] animate-sway z-10" style="animation-delay: -2s;" id="kite-2">
         <svg width="60" height="60" viewBox="0 0 100 100" fill="none"><path d="M50 0L100 50L50 100L0 50L50 0Z" fill="#fbbf24"/><path d="M50 0V100M0 50H100" stroke="white" stroke-width="2"/><path d="M50 100L40 115H60L50 100Z" fill="#f97316"/></svg>
     </div>
 
     <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 relative overflow-hidden">
+        
+        <!-- Animated Gangireddu (Bottom Left) -->
+        <div class="absolute bottom-10 left-[-20px] md:left-10 animate-walk hidden md:block">
+            <div class="cultural-icon flex flex-col items-center">
+                <svg width="180" height="150" viewBox="0 0 200 150">
+                    <!-- Body -->
+                    <ellipse cx="100" cy="100" rx="60" ry="40" fill="#fef3c7" />
+                    <circle cx="150" cy="70" r="25" fill="#fef3c7" />
+                    <!-- Decorations -->
+                    <path d="M60 85 Q100 60 140 85" stroke="#dc2626" stroke-width="15" fill="none" />
+                    <circle cx="80" cy="80" r="5" fill="#fbbf24" />
+                    <circle cx="100" cy="75" r="5" fill="#fbbf24" />
+                    <circle cx="120" cy="80" r="5" fill="#fbbf24" />
+                    <!-- Horns -->
+                    <path d="M140 55 Q135 30 125 40" stroke="#4b5563" stroke-width="4" fill="none" />
+                    <path d="M160 55 Q165 30 175 40" stroke="#4b5563" stroke-width="4" fill="none" />
+                    <!-- Legs -->
+                    <rect x="65" y="130" width="10" height="20" fill="#fef3c7" />
+                    <rect x="85" y="135" width="10" height="20" fill="#fef3c7" />
+                    <rect x="115" y="135" width="10" height="20" fill="#fef3c7" />
+                    <rect x="135" y="130" width="10" height="20" fill="#fef3c7" />
+                </svg>
+                <span class="bg-orange-500 text-white text-[10px] px-2 py-1 rounded-full font-bold">GANGIREDDU</span>
+            </div>
+        </div>
+
+        <!-- Animated Haridasu (Bottom Right) -->
+        <div class="absolute bottom-10 right-[-10px] md:right-10 animate-sway hidden md:block">
+            <div class="cultural-icon flex flex-col items-center">
+                <svg width="120" height="180" viewBox="0 0 100 150">
+                    <!-- Body/Dhoti -->
+                    <path d="M30 60 L70 60 L85 140 L15 140 Z" fill="#ea580c" />
+                    <!-- Torso -->
+                    <rect x="40" y="30" width="20" height="30" fill="#fed7aa" />
+                    <!-- Head -->
+                    <circle cx="50" cy="20" r="15" fill="#fed7aa" />
+                    <!-- Tambura -->
+                    <path d="M65 20 L65 100" stroke="#92400e" stroke-width="4" />
+                    <circle cx="65" cy="110" r="12" fill="#92400e" />
+                    <!-- Chipla (Cymbals) -->
+                    <circle cx="35" cy="80" r="6" fill="#fbbf24" />
+                    <!-- Pumpkin Pot on head -->
+                    <path d="M35 10 Q50 -5 65 10 Z" fill="#fbbf24" />
+                </svg>
+                <span class="bg-yellow-500 text-orange-900 text-[10px] px-2 py-1 rounded-full font-bold">HARIDASU</span>
+            </div>
+        </div>
+
         <div class="relative z-10">
-            <span class="inline-block px-4 py-1 mb-6 text-sm font-semibold tracking-widest text-orange-600 uppercase bg-orange-100 rounded-full">Harvest Festival 2026</span>
+            <span class="inline-block px-4 py-1 mb-6 text-sm font-semibold tracking-widest text-orange-600 uppercase bg-orange-100 rounded-full">Sankranthi Sambaralu 2026</span>
             <h1 class="festive-text text-6xl md:text-8xl mb-6">Happy Sankranthi</h1>
             <p class="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto font-light leading-relaxed">
-                Celebrating our team's hard work, soaring ambitions, and the sweetness of shared success.
+                Celebrating our team's harvest of success, cultural heritage, and soaring ambitions.
             </p>
-            <div class="mt-10 flex gap-4 justify-center">
+            <div class="mt-10 flex flex-wrap gap-4 justify-center">
                 <a href="#messages" class="px-8 py-3 bg-orange-500 text-white rounded-full shadow-lg hover:bg-orange-600 transition transform hover:-translate-y-1">Watch Messages</a>
                 <a href="#wishes" class="px-8 py-3 bg-white text-orange-600 border border-orange-200 rounded-full shadow-sm hover:bg-orange-50 transition transform hover:-translate-y-1">Team Wishes</a>
+                <a href="#traditions" class="px-8 py-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition transform hover:-translate-y-1">Traditions</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Traditions Section (Cock Fight) -->
+    <section id="traditions" class="py-24 px-4 bg-orange-50/50">
+        <div class="max-w-5xl mx-auto text-center">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Kodipunju Pandem</h2>
+            <p class="text-gray-500 mb-12">The spirit of competition and victory!</p>
+            
+            <div class="flex justify-center items-end gap-12 h-64">
+                <!-- Rooster Left -->
+                <div class="animate-jump flex flex-col items-center" style="animation-delay: 0.1s">
+                    <svg width="100" height="100" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="30" fill="#dc2626" />
+                        <path d="M70 40 L90 30" stroke="#dc2626" stroke-width="8" />
+                        <circle cx="45" cy="35" r="15" fill="#dc2626" />
+                        <path d="M55 30 L65 30" stroke="#fbbf24" stroke-width="4" class="animate-peck" />
+                        <path d="M30 60 L10 80" stroke="#000" stroke-width="2" />
+                        <path d="M40 75 L30 95" stroke="#000" stroke-width="3" />
+                    </svg>
+                    <span class="text-xs font-bold text-red-600">Sales</span>
+                </div>
+
+                <div class="text-5xl font-black text-orange-200 self-center">VS</div>
+
+                <!-- Rooster Right -->
+                <div class="animate-jump flex flex-col items-center" style="animation-delay: 0.4s">
+                    <svg width="100" height="100" viewBox="0 0 100 100" style="transform: scaleX(-1)">
+                        <circle cx="50" cy="50" r="30" fill="#1e293b" />
+                        <path d="M70 40 L90 30" stroke="#1e293b" stroke-width="8" />
+                        <circle cx="45" cy="35" r="15" fill="#1e293b" />
+                        <path d="M55 30 L65 30" stroke="#fbbf24" stroke-width="4" />
+                        <path d="M30 60 L10 80" stroke="#000" stroke-width="2" />
+                        <path d="M40 75 L30 95" stroke="#000" stroke-width="3" />
+                    </svg>
+                    <span class="text-xs font-bold text-slate-800">Recruiting</span>
+                </div>
             </div>
         </div>
     </section>
@@ -115,7 +224,7 @@
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-bold text-gray-800">Leadership Spotlight</h2>
-                <p class="text-gray-500 mt-2">Special messages from our Lead and Managers</p>
+                <p class="text-gray-500 mt-2">Festive messages from our Leadership Team</p>
             </div>
             <div class="glass-card rounded-[2.5rem] p-4 md:p-8">
                 <div class="flex justify-center mb-8 border-b border-gray-100">
@@ -124,15 +233,17 @@
                 </div>
                 <div id="video-lead" class="video-block">
                     <div class="video-container shadow-2xl">
-                        <video controls poster="lead_poster.jpg">
+                        <video controls poster="https://via.placeholder.com/1280x720/f97316/ffffff?text=Lead+Message+Poster">
                             <source src="lead_video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
                         </video>
                     </div>
                 </div>
                 <div id="video-manager" class="video-block hidden">
                     <div class="video-container shadow-2xl">
-                        <video controls poster="manager_poster.jpg">
+                        <video controls poster="https://via.placeholder.com/1280x720/fbbf24/ffffff?text=Manager+Message+Poster">
                             <source src="manager_video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
                         </video>
                     </div>
                 </div>
@@ -160,72 +271,123 @@
         </div>
     </section>
     <!-- Wishes Wall -->
-    <section id="wishes" class="py-24 px-4 bg-orange-600 text-white relative">
+    <section id="wishes" class="py-24 px-4 bg-orange-600 text-white relative overflow-hidden">
+        <!-- Background Decorations -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-pink-400/20 rounded-full blur-3xl -ml-32 -mb-32"></div>
+
         <div class="max-w-5xl mx-auto text-center z-10 relative">
             <h2 class="text-4xl font-bold mb-4">Harvest of Gratitude</h2>
+            <p class="mb-12 text-orange-100">Share your festive greetings with the team</p>
+            
             <div class="max-w-2xl mx-auto mb-16 space-y-4">
                 <div class="flex flex-col md:flex-row gap-4">
-                    <input type="text" id="userName" placeholder="Your Name" class="md:w-1/3 px-6 py-4 rounded-full text-gray-800 outline-none">
-                    <input type="text" id="wishInput" placeholder="Write your wish..." class="flex-1 px-6 py-4 rounded-full text-gray-800 outline-none">
+                    <input type="text" id="userName" placeholder="Your Name" class="md:w-1/3 px-6 py-4 rounded-full text-gray-800 outline-none focus:ring-4 ring-yellow-400/50">
+                    <input type="text" id="wishInput" placeholder="Write your wish..." class="flex-1 px-6 py-4 rounded-full text-gray-800 outline-none focus:ring-4 ring-yellow-400/50">
                 </div>
-                <button id="postBtn" onclick="handlePostWish()" class="px-12 py-4 bg-yellow-400 text-orange-900 font-bold rounded-full hover:bg-yellow-300">Post Wish</button>
+                <button id="postBtn" onclick="handlePostWish()" class="px-12 py-4 bg-yellow-400 text-orange-900 font-bold rounded-full hover:bg-yellow-300 transition-all shadow-xl hover:scale-105 active:scale-95">Post Wish</button>
             </div>
+            
             <div id="wishWall" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-                <!-- Wishes will appear here -->
+                <!-- Skeleton Loader -->
+                <div class="animate-pulse bg-white/5 h-32 rounded-2xl"></div>
+                <div class="animate-pulse bg-white/5 h-32 rounded-2xl"></div>
+                <div class="animate-pulse bg-white/5 h-32 rounded-2xl"></div>
             </div>
         </div>
     </section>
 
+    <footer class="py-12 text-center text-gray-500 text-sm">
+        <p>© 2026 Sankranthi Team Celebration • Flourishing Together</p>
+    </footer>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- STEP 1: PASTE YOUR FIREBASE CONFIG HERE ---
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // --- STEP 2: INITIALIZE ---
+        // Environment Globals
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'sankranthi-app';
+        
+        // Initialize
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Sign in anonymously and load wishes
-        signInAnonymously(auth).then(() => {
-            const wishesRef = collection(db, 'team_wishes');
-            const q = query(wishesRef, orderBy('timestamp', 'desc'));
+        let currentUser = null;
 
-            onSnapshot(q, (snapshot) => {
+        // Auth Logic (Rule 3)
+        const initAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Auth failed", error);
+            }
+        };
+        initAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                loadWishes();
+            }
+        });
+
+        function loadWishes() {
+            if (!currentUser) return;
+            // Using public data path (Rule 1)
+            const wishesRef = collection(db, 'artifacts', appId, 'public', 'data', 'team_wishes');
+            
+            // Note: No complex ordering to avoid index requirement (Rule 2)
+            onSnapshot(wishesRef, (snapshot) => {
                 const wall = document.getElementById('wishWall');
                 wall.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const data = doc.data();
+                
+                const docs = [];
+                snapshot.forEach(doc => docs.push(doc.data()));
+                
+                // Manual Sort (Rule 2)
+                docs.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+                if(docs.length === 0) {
+                    wall.innerHTML = '<div class="col-span-full text-center text-orange-200 py-10">No wishes yet. Be the first!</div>';
+                    return;
+                }
+
+                docs.forEach(data => {
                     const card = document.createElement('div');
-                    card.className = 'bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/20 shadow-lg';
+                    card.className = 'bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/15 transition-all';
                     card.innerHTML = `<p class="text-white italic">"${data.wish}"</p><span class="font-bold text-yellow-300 text-sm mt-4 block">— ${data.name}</span>`;
                     wall.appendChild(card);
                 });
-            });
-        });
+            }, (err) => console.error("Snapshot error:", err));
+        }
 
         window.handlePostWish = async () => {
+            if (!currentUser) return;
             const name = document.getElementById('userName').value.trim();
             const wish = document.getElementById('wishInput').value.trim();
+            
             if(!name || !wish) return;
 
             try {
-                await addDoc(collection(db, 'team_wishes'), {
-                    name, wish, timestamp: serverTimestamp()
+                const wishesRef = collection(db, 'artifacts', appId, 'public', 'data', 'team_wishes');
+                await addDoc(wishesRef, {
+                    name, 
+                    wish, 
+                    userId: currentUser.uid,
+                    timestamp: serverTimestamp()
                 });
                 document.getElementById('wishInput').value = '';
                 localStorage.setItem('sankranthi_user_name', name);
-            } catch (e) { console.error(e); }
+            } catch (e) { 
+                console.error("Error posting wish", e); 
+            }
         };
 
         // UI Helpers
@@ -244,14 +406,13 @@
             const p = document.createElement('div');
             p.className = 'petal';
             p.style.width = p.style.height = (Math.random()*15+10)+'px';
-            p.style.backgroundColor = ['#f97316', '#fbbf24', '#db2777'][Math.floor(Math.random()*3)];
+            p.style.backgroundColor = ['#f97316', '#fbbf24', '#db2777', '#16a34a'][Math.floor(Math.random()*4)];
             p.style.left = Math.random()*100+'vw';
             p.style.borderRadius = '50% 0 50% 50%';
             p.style.animationDuration = (Math.random()*3+4)+'s';
             document.getElementById('petal-container').appendChild(p);
             setTimeout(() => p.remove(), 7000);
-        }, 500);
+        }, 400);
     </script>
 </body>
-
 </html>
