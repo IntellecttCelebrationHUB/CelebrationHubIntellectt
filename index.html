@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Sankranthi - Team Celebration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --festive-orange: #f97316;
+            --festive-yellow: #fbbf24;
+            --festive-pink: #db2777;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fffcf0 0%, #fff4e0 100%);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .festive-text {
+            font-family: 'Rozha One', serif;
+            background: linear-gradient(to right, #ea580c, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .kite-container {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            transition: transform 0.2s ease-out;
+        }
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg) translateY(0); }
+            50% { transform: rotate(5deg) translateY(-20px); }
+        }
+        .animate-sway {
+            animation: sway 4s ease-in-out infinite;
+        }
+        .petal {
+            position: fixed;
+            top: -10%;
+            user-select: none;
+            pointer-events: none;
+            z-index: 50;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            background: #111;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .tab-active {
+            border-bottom: 3px solid var(--festive-orange);
+            color: var(--festive-orange);
+            font-weight: 600;
+        }
+        .rangoli-pattern {
+            background-image: radial-gradient(#fbbf24 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <div id="petal-container"></div>
+    <div class="fixed inset-0 rangoli-pattern pointer-events-none"></div>
+
+    <!-- Floating Kites -->
+    <div class="kite-container top-10 left-[5%] animate-sway" id="kite-1">
+        <svg width="80" height="80" viewBox="0 0 100 100" fill="none"><path d="M50 0L100 50L50 100L0 50L50 0Z" fill="#f97316"/><path d="M50 0V100M0 50H100" stroke="white" stroke-width="2"/><path d="M50 100L40 120H60L50 100Z" fill="#db2777"/></svg>
+    </div>
+    <div class="kite-container top-20 right-[10%] animate-sway" style="animation-delay: -2s;" id="kite-2">
+        <svg width="60" height="60" viewBox="0 0 100 100" fill="none"><path d="M50 0L100 50L50 100L0 50L50 0Z" fill="#fbbf24"/><path d="M50 0V100M0 50H100" stroke="white" stroke-width="2"/><path d="M50 100L40 115H60L50 100Z" fill="#f97316"/></svg>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
+        <div class="relative z-10">
+            <span class="inline-block px-4 py-1 mb-6 text-sm font-semibold tracking-widest text-orange-600 uppercase bg-orange-100 rounded-full">Harvest Festival 2026</span>
+            <h1 class="festive-text text-6xl md:text-8xl mb-6">Happy Sankranthi</h1>
+            <p class="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto font-light leading-relaxed">
+                Celebrating our team's hard work, soaring ambitions, and the sweetness of shared success.
+            </p>
+            <div class="mt-10 flex gap-4 justify-center">
+                <a href="#messages" class="px-8 py-3 bg-orange-500 text-white rounded-full shadow-lg hover:bg-orange-600 transition transform hover:-translate-y-1">Watch Messages</a>
+                <a href="#wishes" class="px-8 py-3 bg-white text-orange-600 border border-orange-200 rounded-full shadow-sm hover:bg-orange-50 transition transform hover:-translate-y-1">Team Wishes</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="messages" class="py-24 px-4 bg-white/40">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800">Leadership Spotlight</h2>
+                <p class="text-gray-500 mt-2">Special messages from our Lead and Managers</p>
+            </div>
+            <div class="glass-card rounded-[2.5rem] p-4 md:p-8">
+                <div class="flex justify-center mb-8 border-b border-gray-100">
+                    <button onclick="switchVideo('lead')" id="tab-lead" class="px-6 py-3 transition tab-active">Lead's Message</button>
+                    <button onclick="switchVideo('manager')" id="tab-manager" class="px-6 py-3 transition text-gray-400">Manager's Message</button>
+                </div>
+                <div id="video-lead" class="video-block">
+                    <div class="video-container shadow-2xl">
+                        <video controls poster="lead_poster.jpg">
+                            <source src="lead_video.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div id="video-manager" class="video-block hidden">
+                    <div class="video-container shadow-2xl">
+                        <video controls poster="manager_poster.jpg">
+                            <source src="manager_video.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wishes Wall -->
+    <section id="wishes" class="py-24 px-4 bg-orange-600 text-white relative">
+        <div class="max-w-5xl mx-auto text-center z-10 relative">
+            <h2 class="text-4xl font-bold mb-4">Harvest of Gratitude</h2>
+            <div class="max-w-2xl mx-auto mb-16 space-y-4">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="userName" placeholder="Your Name" class="md:w-1/3 px-6 py-4 rounded-full text-gray-800 outline-none">
+                    <input type="text" id="wishInput" placeholder="Write your wish..." class="flex-1 px-6 py-4 rounded-full text-gray-800 outline-none">
+                </div>
+                <button id="postBtn" onclick="handlePostWish()" class="px-12 py-4 bg-yellow-400 text-orange-900 font-bold rounded-full hover:bg-yellow-300">Post Wish</button>
+            </div>
+            <div id="wishWall" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                <!-- Wishes will appear here -->
+            </div>
+        </div>
+    </section>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- STEP 1: PASTE YOUR FIREBASE CONFIG HERE ---
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // --- STEP 2: INITIALIZE ---
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Sign in anonymously and load wishes
+        signInAnonymously(auth).then(() => {
+            const wishesRef = collection(db, 'team_wishes');
+            const q = query(wishesRef, orderBy('timestamp', 'desc'));
+
+            onSnapshot(q, (snapshot) => {
+                const wall = document.getElementById('wishWall');
+                wall.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const card = document.createElement('div');
+                    card.className = 'bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/20 shadow-lg';
+                    card.innerHTML = `<p class="text-white italic">"${data.wish}"</p><span class="font-bold text-yellow-300 text-sm mt-4 block">— ${data.name}</span>`;
+                    wall.appendChild(card);
+                });
+            });
+        });
+
+        window.handlePostWish = async () => {
+            const name = document.getElementById('userName').value.trim();
+            const wish = document.getElementById('wishInput').value.trim();
+            if(!name || !wish) return;
+
+            try {
+                await addDoc(collection(db, 'team_wishes'), {
+                    name, wish, timestamp: serverTimestamp()
+                });
+                document.getElementById('wishInput').value = '';
+                localStorage.setItem('sankranthi_user_name', name);
+            } catch (e) { console.error(e); }
+        };
+
+        // UI Helpers
+        window.switchVideo = (type) => {
+            document.getElementById('video-lead').classList.toggle('hidden', type !== 'lead');
+            document.getElementById('video-manager').classList.toggle('hidden', type !== 'manager');
+            document.getElementById('tab-lead').classList.toggle('tab-active', type === 'lead');
+            document.getElementById('tab-manager').classList.toggle('tab-active', type === 'manager');
+        };
+
+        const savedName = localStorage.getItem('sankranthi_user_name');
+        if (savedName) document.getElementById('userName').value = savedName;
+
+        // Petal Effect
+        setInterval(() => {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            p.style.width = p.style.height = (Math.random()*15+10)+'px';
+            p.style.backgroundColor = ['#f97316', '#fbbf24', '#db2777'][Math.floor(Math.random()*3)];
+            p.style.left = Math.random()*100+'vw';
+            p.style.borderRadius = '50% 0 50% 50%';
+            p.style.animationDuration = (Math.random()*3+4)+'s';
+            document.getElementById('petal-container').appendChild(p);
+            setTimeout(() => p.remove(), 7000);
+        }, 500);
+    </script>
+</body>
+</html>
