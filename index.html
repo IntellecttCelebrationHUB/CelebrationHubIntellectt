@@ -71,20 +71,43 @@
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
         }
+               .rangoli-dots {
 
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 1.5rem;
-            background: #111;
+            background-image: radial-gradient(#fbbf24 1px, transparent 1px);
+
+            background-size: 40px 40px;
+
+            opacity: 0.2;
+
         }
-        .video-container video {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-        }
+        
+        @keyframes kiteFloat {
+    0%   { transform: translateY(0) rotate(0deg); }
+    50%  { transform: translateY(-25px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+.animate-kite {
+    animation: kiteFloat 6s ease-in-out infinite;
+}
+#kite-arena {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* Dense grid */
+    gap: 1.5rem;
+    perspective: 1000px;
+    will-change: transform; /* Boosts performance */
+}
+
+/* Make kites slightly smaller and faster to render */
+.kite-item {
+    transition: transform 0.3s ease;
+    backface-visibility: hidden;
+}
+
+.kite-item:hover {
+    transform: scale(1.2) zIndex(10);
+    z-index: 50;
+}
         
         .rangoli-bg {
             background-image: radial-gradient(#fbbf24 1px, transparent 1px);
@@ -104,7 +127,17 @@
             z-index: 1000;
             display: none;
         }
-
+        /* Bhogi Fire Flicker */
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+            20% { transform: scale(1.05, 0.95) rotate(-1deg); opacity: 1; }
+            40% { transform: scale(0.98, 1.05) rotate(1deg); opacity: 0.85; }
+            60% { transform: scale(1.02, 1) rotate(-0.5deg); opacity: 1; }
+            80% { transform: scale(0.95, 1.02) rotate(0.5deg); opacity: 0.9; }
+        }
+        .animate-flicker {
+            animation: flicker 0.5s ease-in-out infinite;
+        }
         #debugBadge {
             position: fixed;
             bottom: 10px;
@@ -118,10 +151,33 @@
             opacity: 0.95;
             font-weight: bold;
         }
+        .image-preview-container {
+    width: 80px;
+    height: 80px;
+    border: 2px dashed rgba(255,255,255,0.4);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
+}
+.image-preview-container:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #fbbf24;
+}
+#imagePreview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
     </style>
 </head>
 <body class="relative">
-
+    
+   <div class="fixed inset-0 rangoli-dots pointer-events-none"></div>
     <div id="petal-container"></div>
     <div class="fixed inset-0 rangoli-bg pointer-events-none"></div>
 
@@ -141,7 +197,93 @@
     </div>
     <!-- Hero Section -->
     <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 relative overflow-hidden">
-        
+                <!-- ENHANCED STATIC RANGOLI BACKGROUND -->
+
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30 pointer-events-none z-0">
+
+            <svg class="animate-rotate" width="800" height="800" viewBox="0 0 200 200">
+
+                <defs>
+
+                    <filter id="glow">
+
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+
+                        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+
+                    </filter>
+
+                </defs>
+
+                <!-- Central Patterns -->
+
+                <circle cx="100" cy="100" r="85" fill="none" stroke="#fbbf24" stroke-width="0.5" stroke-dasharray="2 4" />
+
+                <circle cx="100" cy="100" r="70" fill="none" stroke="#ea580c" stroke-width="1" />
+
+               
+
+                <!-- Petal Layers -->
+
+                <g fill="#db2777" opacity="0.4">
+
+                    <path d="M100 30 Q110 50 100 70 Q90 50 100 30" transform="rotate(0 100 100)" />
+
+                    <path d="M100 30 Q110 50 100 70 Q90 50 100 30" transform="rotate(45 100 100)" />
+
+                    <path d="M100 30 Q110 50 100 70 Q90 50 100 30" transform="rotate(90 100 100)" />
+
+                    <path d="M100 30 Q110 50 100 70 Q90 50 100 30" transform="rotate(135 100 100)" />
+
+                    <path d="M100 30 Q110 50 100 70 Q90 50 100 30" transform="rotate(180 100 100)" />
+
+                    <path d="M100 30 Q110 50 100 70 Q90 50 100 30" transform="rotate(225 100 100)" />
+
+                    <path d="M100 30 Q110 50 100 70 Q90 50 100 30" transform="rotate(270 100 100)" />
+
+                    <path d="M100 30 Q110 50 100 70 Q90 50 100 30" transform="rotate(315 100 100)" />
+
+                </g>
+
+
+
+                <g fill="#fbbf24" opacity="0.6">
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(0 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(30 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(60 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(90 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(120 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(150 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(180 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(210 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(240 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(270 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(300 100 100)" />
+
+                    <circle cx="100" cy="45" r="5" transform="rotate(330 100 100)" />
+
+                </g>
+
+
+
+                <circle cx="100" cy="100" r="15" fill="#ea580c" filter="url(#glow)" />
+
+                <circle cx="100" cy="100" r="8" fill="#fff" />
+
+            </svg>
+
+        </div>
                 <!-- Animated REALISTIC White Gangireddu (Bottom Left) -->
         <div class="absolute bottom-5 left-[-40px] md:left-5 animate-walk hidden md:block">
             <div class="cultural-icon flex flex-col items-center">
@@ -222,6 +364,29 @@
                 <span class="bg-orange-600 text-white text-[11px] px-4 py-1 rounded-full font-bold shadow-lg -mt-3 uppercase tracking-widest border border-orange-400">GANGIREDDU</span>
             </div>
         </div>
+        <!-- BHOGI FIRE -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center hidden md:flex">
+            <div class="relative w-48 h-52 scale-90 md:scale-100">
+                <svg viewBox="0 0 100 120" class="w-full h-full">
+                    <radialGradient id="fireGlow" cx="50%" cy="85%" r="40%">
+                        <stop offset="0%" stop-color="#f97316" stop-opacity="0.4" />
+                        <stop offset="100%" stop-color="#f97316" stop-opacity="0" />
+                    </radialGradient>
+                    <ellipse cx="50" cy="105" rx="35" ry="10" fill="url(#fireGlow)" />
+                    <g stroke="#2d1606" stroke-width="0.5">
+                        <rect x="10" y="102" width="80" height="12" rx="3" fill="#451a03" />
+                        <rect x="5" y="106" width="90" height="10" rx="3" fill="#3b1602" transform="rotate(2 50 111)" />
+                        <rect x="20" y="90" width="60" height="12" rx="3" fill="#542308" transform="rotate(-20 50 96)" />
+                        <rect x="20" y="90" width="60" height="12" rx="3" fill="#451a03" transform="rotate(20 50 96)" />
+                    </g>
+                    <g class="animate-flicker" style="transform-origin: 50px 105px;">
+                        <path d="M50 15 C75 55 85 85 80 105 C70 115 30 115 20 105 C15 85 25 55 50 15" fill="#f97316" />
+                        <path d="M50 40 C65 65 75 85 70 102 C65 110 35 110 30 102 C25 85 35 65 50 40" fill="#fbbf24" />
+                    </g>
+                </svg>
+            </div>
+            <span class="bg-orange-950/80 text-orange-100 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest mt-1 backdrop-blur-sm shadow-lg border border-orange-700/50">Bhogi Mantalu</span>
+        </div>
 
         <!-- HARIDASU -->
         <div class="absolute bottom-10 right-[-10px] md:right-10 animate-sway hidden md:block">
@@ -246,13 +411,13 @@
                 Celebrating our team's hard work, soaring ambitions, and the sweetness of shared success.
             </p>
             <div class="mt-10 flex flex-wrap gap-4 justify-center">
-                <a href="#messages" class="px-8 py-3 bg-orange-500 text-white rounded-full shadow-lg hover:bg-orange-600 transition transform hover:-translate-y-1">Watch Message</a>
-                <a href="#wishes" class="px-8 py-3 bg-white text-orange-600 border border-orange-200 rounded-full shadow-sm hover:bg-orange-50 transition transform hover:-translate-y-1">Click to send the wishes to the Team</a>
-                <a href="#traditions" class="px-8 py-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition transform hover:-translate-y-1">Traditions</a>
+                <a href="#traditions" class="px-8 py-3 bg-orange-500 text-white rounded-full shadow-lg hover:bg-orange-600 transition transform hover:-translate-y-1">Traditions</a>
+                <a href="#community-sky" class="px-8 py-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition transform hover:-translate-y-1">Team Sky</a>
+                <a href="#wishes" class="px-8 py-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition transform hover:-translate-y-1">Gratitude Wall</a>
             </div>
         </div>
     </section>
-
+     
     <!-- ROOSTER FIGHT SECTION -->
         <!-- Traditions Section (Cock Fight) -->
     <section id="traditions" class="py-24 px-4 bg-orange-50/50">
@@ -292,20 +457,6 @@
         </div>
     </section>
 
-    <!-- VIDEO SECTION -->
-    <section id="messages" class="py-24 px-4 bg-white/40">
-        <div class="max-w-5xl mx-auto text-center">
-            <h2 class="text-4xl font-bold text-gray-800 mb-12">Leadership Message</h2>
-            <div class="glass-card rounded-[2.5rem] p-4 md:p-8 max-w-4xl mx-auto">
-                <div class="video-container shadow-2xl">
-                    <video controls poster="https://via.placeholder.com/1280x720/f97316/ffffff?text=Leadership+Message">
-                        <source src="leadership_video.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- Interactive Greeting Grid -->
     <section class="py-24 px-4">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -326,20 +477,119 @@
             </div>
         </div>
     </section>
+    <!-- TRADITIONS SECTION (Enhanced with Cards) -->
+    <section id="traditions" class="py-24 px-4 max-w-7xl mx-auto">
+        <div class="flex items-center gap-3 mb-12">
+            <div class="h-10 w-2 bg-orange-600 rounded-full"></div>
+            <h2 class="text-3xl font-bold text-gray-800">The Essence of Sankranthi</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Bhogi Card -->
+            <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-xl border-t-4 border-orange-500 hover:scale-105 transition-transform group">
+                <div class="bg-orange-100 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-orange-200 transition-colors">🔥</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Bhogi Mantalu</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Starting the festival with a bonfire to burn away the old and welcome the new prosperity and warmth.</p>
+            </div>
+
+            <!-- Haridasu Card -->
+            <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-xl border-t-4 border-yellow-500 hover:scale-105 transition-transform group">
+                <div class="bg-yellow-100 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow-200 transition-colors">🎤</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Haridasu</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">The melodic presence of Haridasu early in the morning, carrying a tambura and singing devotional hymns.</p>
+            </div>
+
+            <!-- Gangireddu Card -->
+            <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-xl border-t-4 border-red-500 hover:scale-105 transition-transform group">
+                <div class="bg-red-100 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-red-200 transition-colors">🐂</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Gangireddu</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Decorated bulls dancing to the tunes of Sannai, visiting homes and bringing festive blessings to the team.</p>
+            </div>
+
+            <!-- Kodipandalu Card -->
+            <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-xl border-t-4 border-slate-700 hover:scale-105 transition-transform group">
+                <div class="bg-slate-100 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-slate-200 transition-colors">🐓</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Kodipandalu</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">The traditional rural sports that bring a competitive and lively spirit to the harvest season.</p>
+            </div>
+
+            <!-- Muggulu Card -->
+            <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-xl border-t-4 border-pink-500 hover:scale-105 transition-transform group">
+                <div class="bg-pink-100 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-pink-200 transition-colors">🌸</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Rangoli & Muggulu</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Intricate geometric patterns at the doorstep, adorned with flowers and Gobbemma to welcome the Sun God.</p>
+            </div>
+
+            <!-- Kites Card -->
+            <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-xl border-t-4 border-blue-500 hover:scale-105 transition-transform group">
+                <div class="bg-blue-100 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-200 transition-colors">🪁</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Patang (Kites)</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">The sky fills with color as generations come together to 'cut' other kites in friendly duels of ambition.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE COMMUNITY SECTION -->
+    <section id="community-sky" class="py-24 px-4 bg-sky-50/50 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-4">
+                <h2 class="text-4xl font-bold text-slate-800">Sky of Ambitions</h2>
+                <span id="kite-count" class="bg-orange-100 text-orange-600 px-4 py-1 rounded-full font-bold text-lg hidden">0 Kites Soaring</span>
+            </div>
+            <p class="text-slate-600 mb-12 max-w-2xl mx-auto italic font-medium">
+                Launch a kite with your name! Scroll the sky to see all your soaring teammates.
+            </p>
+
+            <div class="glass-card rounded-[2.5rem] min-h-[600px] max-h-[700px] relative overflow-hidden border-2 border-sky-200 bg-sky-100/30 flex flex-col shadow-2xl">
+                <div class="absolute inset-0 flex items-center justify-center p-12 pointer-events-none" id="sky-placeholder">
+                    <div class="text-sky-300 font-bold opacity-50 text-xl">The sky is waiting for our team...</div>
+                </div>
+                <div id="kite-arena" class="flex-1 overflow-y-auto p-12 flex flex-wrap items-center justify-center gap-12 content-start relative z-0 custom-scrollbar"></div>
+                <div class="p-8 border-t border-sky-100 bg-white/60 backdrop-blur-md relative z-10">
+                    <div class="max-w-md mx-auto flex bg-white rounded-full shadow-2xl p-1 border border-sky-100 ring-4 ring-sky-50">
+                        <input type="text" id="kiteName" placeholder="Enter your name to launch" class="flex-1 bg-transparent px-6 py-3 outline-none text-slate-700 font-medium">
+                        <button onclick="handleLaunchKite()" id="launchBtn" class="bg-orange-600 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-700 transition-all shadow-lg active:scale-95">Launch 🪁</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- WISHES WALL -->
     <!-- WISHES WALL -->
     <section id="wishes" class="py-24 px-4 bg-orange-600 text-white relative overflow-hidden">
         <div class="max-w-5xl mx-auto text-center z-10 relative">
             <h2 class="text-4xl font-bold mb-4">Harvest of Gratitude</h2>
-            <p class="mb-12 text-orange-100">Share your festive greetings with the team</p>
-            <div class="max-w-2xl mx-auto mb-16 space-y-4">
-                <div class="flex flex-col md:flex-row gap-4">
-                    <input type="text" id="userName" placeholder="Your Name" class="md:w-1/3 px-6 py-4 rounded-full text-gray-800 outline-none">
-                    <input type="text" id="wishInput" placeholder="Write your wish..." class="flex-1 px-6 py-4 rounded-full text-gray-800 outline-none">
+            <p class="mb-12 text-orange-100">Share your festive greetings and vibes with the team</p>
+            
+            <!-- Posting Area -->
+            <div class="max-w-3xl mx-auto mb-20 bg-white/10 p-8 rounded-[2rem] backdrop-blur-lg border border-white/20 shadow-2xl">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Left: Photo Picker -->
+                    <div class="flex flex-col items-center gap-2">
+                        <label for="wishImage" class="image-preview-container" id="imageLabel">
+                            <div class="text-white text-center p-2" id="imagePlaceholder">
+                                <span class="text-2xl">📸</span><br>
+                                <span class="text-[10px] font-semibold uppercase">Add Photo</span>
+                            </div>
+                            <img id="imagePreview" class="hidden" alt="Preview">
+                        </label>
+                        <input type="file" id="wishImage" accept="image/*" class="hidden" onchange="previewFile()">
+                        <button onclick="clearImage()" id="clearImgBtn" class="text-[10px] text-orange-200 hover:text-white hidden underline">Remove Photo</button>
+                    </div>
+
+                    <!-- Right: Text Inputs -->
+                    <div class="flex-1 space-y-4">
+                        <input type="text" id="userName" placeholder="Your Name" class="w-full px-6 py-4 rounded-2xl text-gray-800 outline-none focus:ring-4 focus:ring-yellow-400 transition-all shadow-inner">
+                        <textarea id="wishInput" rows="2" placeholder="Write your festive wish..." class="w-full px-6 py-4 rounded-2xl text-gray-800 outline-none focus:ring-4 focus:ring-yellow-400 transition-all shadow-inner resize-none"></textarea>
+                    </div>
                 </div>
-                <button id="postBtn" onclick="handlePostWish()" class="px-12 py-4 bg-yellow-400 text-orange-900 font-bold rounded-full hover:bg-yellow-300 shadow-xl transition-all">Post Wish</button>
+                <div class="mt-6 flex justify-center">
+                    <button id="postBtn" onclick="handlePostWish()" class="px-16 py-4 bg-yellow-400 text-orange-950 font-black rounded-full hover:bg-yellow-300 hover:scale-105 active:scale-95 shadow-xl transition-all uppercase tracking-widest">Post to Wall</button>
+                </div>
             </div>
-            <div id="wishWall" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-                <!-- Data loads here from Firestore -->
+
+            <div id="wishWall" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                <!-- Wishes will render here -->
             </div>
         </div>
     </section>
@@ -348,156 +598,303 @@
         <p>© 2026 Sankranthi Team Celebration • Flourishing Together</p>
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Your intellectt-celebration Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyBo8tL_8B7_Lh83rMVBG8qjD5B4PcKIDNM",
-            authDomain: "intellectt-celebration.firebaseapp.com",
-            projectId: "intellectt-celebration",
-            storageBucket: "intellectt-celebration.firebasestorage.app",
-            messagingSenderId: "505547799374",
-            appId: "1:505547799374:web:8c2d00c23eee3cd0c67c1f",
-            measurementId: "G-WETKT082KX"
-        };
-        
-        const appId = 'intellectt-sankranthi-app';
-        let db, auth, currentUser = null, isFirebaseReady = false;
+    const firebaseConfig = {
+        apiKey: "AIzaSyBo8tL_8B7_Lh83rMVBG8qjD5B4PcKIDNM",
+        authDomain: "intellectt-celebration.firebaseapp.com",
+        projectId: "intellectt-celebration",
+        storageBucket: "intellectt-celebration.firebasestorage.app",
+        messagingSenderId: "505547799374",
+        appId: "1:505547799374:web:8c2d00c23eee3cd0c67c1f",
+        measurementId: "G-WETKT082KX"
+    };
 
+    const appId = 'intellectt-sankranthi-app';
+    let db, auth, currentUser = null, isFirebaseReady = false;
+
+    // --- Helper Functions ---
+    const updateDebug = (text, color = "#333") => {
         const debugBadge = document.getElementById('debugBadge');
-        const updateDebug = (text, color = "#333") => {
+        if (debugBadge) {
             debugBadge.innerText = `Storage: ${text}`;
             debugBadge.style.background = color;
-        };
+        }
+    };
 
+    const renderKites = (kites) => {
+    const arena = document.getElementById('kite-arena');
+    const placeholder = document.getElementById('sky-placeholder');
+    const counter = document.getElementById('kite-count');
+    if (!arena || !placeholder || !counter) return;
+
+    arena.innerHTML = '';
+
+    if (kites.length === 0) {
+        placeholder.style.display = 'flex';
+        counter.classList.add('hidden');
+        return;
+    }
+
+    placeholder.style.display = 'none';
+    counter.classList.remove('hidden');
+    counter.innerText = `${kites.length} Kites Soaring`;
+
+    // Sort: Newest kites first
+    kites.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+    kites.forEach((k, index) => {
+        const div = document.createElement('div');
+        
+        // For 300+ kites, we reduce the scale as they get older (creating depth)
+        // Kites 1-20 are normal size, 21-100 are smaller, 101+ are "in the distance"
+        let depthScale = 1.0;
+        if (index > 20) depthScale = 0.8;
+        if (index > 100) depthScale = 0.6;
+
+        const delay = -(index % 10) * 0.8; // Varied animation start times
+
+        div.className = 'kite-item animate-kite flex flex-col items-center justify-center relative';
+        div.style.animationDelay = `${delay}s`;
+        div.style.transform = `scale(${depthScale})`;
+
+        div.innerHTML = `
+            <div class="relative group">
+                <svg width="50" height="50" viewBox="0 0 100 100" style="filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1))">
+                    <path d="M50 0L100 50L50 100L0 50L50 0Z" fill="${k.color || '#f97316'}"/>
+                    <path d="M50 0V100M0 50H100" stroke="white" stroke-width="3" opacity="0.8"/>
+                    <path d="M50 100 Q60 115 50 135" stroke="${k.color || '#f97316'}" stroke-width="2" fill="none"/>
+                </svg>
+                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-90 group-hover:opacity-100 transition-opacity">
+                    <span class="bg-white/95 px-2 py-0.5 rounded-md text-[9px] font-bold shadow-sm text-slate-700 whitespace-nowrap border border-sky-100">
+                        ${k.name || 'Team'}
+                    </span>
+                </div>
+            </div>
+        `;
+        arena.appendChild(div);
+    });
+};
+
+// --- WISHES LOGIC ---
         const renderWishes = (wishes) => {
             const wall = document.getElementById('wishWall');
-            wall.innerHTML = '';
+            if (!wall) return;
             
-            // Sort by timestamp newest first
+            wall.innerHTML = '';
+            if (wishes.length === 0) {
+                wall.innerHTML = '<div class="col-span-full text-center text-orange-200 py-10">Waiting for the first festive wish...</div>';
+                return;
+            }
+
             wishes.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-            if(wishes.length === 0) {
-                wall.innerHTML = '<div class="col-span-full text-center text-orange-200 py-10">No wishes yet. Be the first to share!</div>';
-                return;
-            }
-
+            const fragment = document.createDocumentFragment();
             wishes.forEach(data => {
                 const card = document.createElement('div');
-                card.className = 'bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/20 shadow-lg';
-                card.innerHTML = `<p class="text-white italic">"${data.wish}"</p><span class="font-bold text-yellow-300 text-sm mt-4 block">— ${data.name}</span>`;
-                wall.appendChild(card);
-            });
-        };
+                card.className = 'bg-white rounded-[2rem] overflow-hidden shadow-2xl transition-all hover:scale-[1.02] border border-orange-100 flex flex-col';
+                
+                let imageHtml = '';
+                if (data.image) {
+                    // CHANGED: Use object-contain and flex centering to ensure whole image is seen
+                    imageHtml = `<div class="w-full bg-orange-50/30 flex items-center justify-center p-2 border-b border-orange-50 min-h-[200px] max-h-[350px]">
+                                    <img src="${data.image}" class="max-w-full max-h-full object-contain rounded-xl" alt="Sankranthi Vibe">
+                                 </div>`;
+                }
 
-        // Initialize Firebase
+                card.innerHTML = `
+                    ${imageHtml}
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex-1">
+                            <span class="text-orange-500 text-2xl opacity-30">"</span>
+                            <p class="text-slate-700 italic leading-relaxed text-sm -mt-2 px-2">${data.wish}</p>
+                            <div class="text-right"><span class="text-orange-500 text-2xl opacity-30">"</span></div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between">
+                            <span class="font-bold text-orange-600 text-sm tracking-wide">— ${data.name}</span>
+                            <span class="text-[10px] text-slate-400">${new Date(data.timestamp).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                `;
+                fragment.appendChild(card);
+            });
+            wall.appendChild(fragment);
+        };
+    // --- Global Handlers (Attached to window for HTML onclick access) ---
+    window.handleLaunchKite = async () => {
+        const nameInput = document.getElementById('kiteName');
+        const name = nameInput.value.trim();
+        if (!name || !currentUser) return;
+
+        const btn = document.getElementById('launchBtn');
+        btn.disabled = true; 
+        btn.innerText = "Launching...";
+
+        const colors = ['#f97316', '#fbbf24', '#db2777', '#15803d', '#3b82f6', '#9333ea'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
         try {
-            const app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            
-            signInAnonymously(auth).then(() => {
+            const kitesRef = collection(db, 'artifacts', appId, 'public', 'data', 'team_kites');
+            await addDoc(kitesRef, { name, color: randomColor, timestamp: serverTimestamp() });
+            nameInput.value = '';
+        } catch (e) { 
+            console.error(e); 
+        } finally {
+            btn.disabled = false; 
+            btn.innerText = "Launch 🪁";
+        }
+    };
+
+    window.previewFile = () => {
+    const preview = document.getElementById('imagePreview');
+    const placeholder = document.getElementById('imagePlaceholder');
+    const file = document.getElementById('wishImage').files[0];
+    const clearBtn = document.getElementById('clearImgBtn');
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+        preview.src = reader.result;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        clearBtn.classList.remove('hidden');
+    }
+
+    if (file) {
+        reader.readAsDataURL(file); // Converts image to Base64 string
+    }
+};
+
+window.clearImage = () => {
+    const preview = document.getElementById('imagePreview');
+    const placeholder = document.getElementById('imagePlaceholder');
+    const fileInput = document.getElementById('wishImage');
+    const clearBtn = document.getElementById('clearImgBtn');
+
+    fileInput.value = "";
+    preview.src = "";
+    preview.classList.add('hidden');
+    placeholder.classList.remove('hidden');
+    clearBtn.classList.add('hidden');
+};
+
+// --- UPDATED POST WISH LOGIC ---
+window.handlePostWish = async () => {
+    const name = document.getElementById('userName').value.trim();
+    const wish = document.getElementById('wishInput').value.trim();
+    const imagePreview = document.getElementById('imagePreview');
+    
+    // Get the Base64 image string if it exists
+    const imageData = imagePreview.classList.contains('hidden') ? null : imagePreview.src;
+
+    if (!name || !wish) {
+        alert("Please enter both your name and a wish!");
+        return;
+    }
+
+    if (!isFirebaseReady || !currentUser) {
+        alert("Database not connected. Please wait a moment.");
+        return;
+    }
+
+    const btn = document.getElementById('postBtn');
+    const statusToast = document.getElementById('statusMsg');
+    const originalBtnText = btn.innerText;
+
+    btn.innerText = "Posting...";
+    btn.disabled = true;
+
+    try {
+        const wishesRef = collection(db, 'artifacts', appId, 'public', 'data', 'team_wishes');
+        await addDoc(wishesRef, { 
+            name, 
+            wish, 
+            image: imageData, // Added image data here
+            userId: currentUser.uid, 
+            timestamp: serverTimestamp() 
+        });
+
+        // Reset Form
+        document.getElementById('wishInput').value = '';
+        window.clearImage(); 
+        
+        // Show Success
+        statusToast.style.display = 'block';
+        setTimeout(() => statusToast.style.display = 'none', 3000);
+    } catch (e) { 
+        console.error("Save Error:", e);
+        alert("Failed to post wish. Try a smaller image.");
+    } finally {
+        btn.innerText = originalBtnText;
+        btn.disabled = false;
+    }
+    localStorage.setItem('sankranthi_user_name', name);
+   };
+
+    // --- Initialization ---
+    try {
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+
+        signInAnonymously(auth).catch(err => {
+            console.error("Auth Error:", err);
+            updateDebug("❌ Auth Failed", "#dc2626");
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
                 isFirebaseReady = true;
                 updateDebug("Cloud Connected ✅", "#059669");
-            }).catch((err) => {
-                console.error("Auth Error:", err);
-                isFirebaseReady = false;
-                if (err.code === 'auth/configuration-not-found') {
-                    updateDebug("❌ Action Required: Enable Anon Auth", "#dc2626");
-                } else {
-                    updateDebug("❌ Connection Failed", "#dc2626");
-                }
-            });
 
-            onAuthStateChanged(auth, (user) => {
-                currentUser = user;
-                if (user) loadRemoteWishes();
-            });
-        } catch (e) {
-            updateDebug("Config Error ❌", "#dc2626");
-        }
-
-        function loadRemoteWishes() {
-            // Path structure for Firestore security rules
-            const wishesRef = collection(db, 'artifacts', appId, 'public', 'data', 'team_wishes');
-            
-            onSnapshot(wishesRef, (snapshot) => {
-                const docs = [];
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    docs.push({ 
-                        ...data, 
-                        timestamp: data.timestamp?.seconds * 1000 || Date.now() 
-                    });
+                // Listen for Kites
+                const kitesRef = collection(db, 'artifacts', appId, 'public', 'data', 'team_kites');
+                onSnapshot(kitesRef, (snapshot) => {
+                    const docs = [];
+                    snapshot.forEach(doc => docs.push(doc.data()));
+                    renderKites(docs);
                 });
-                renderWishes(docs);
-            }, (err) => {
-                console.error("Access Denied:", err);
-                updateDebug("Firestore Permission Error ❌", "#dc2626");
-            });
-        }
 
-        window.handlePostWish = async () => {
-            const name = document.getElementById('userName').value.trim();
-            const wish = document.getElementById('wishInput').value.trim();
-            if(!name || !wish) return;
-
-            if (!isFirebaseReady || !currentUser) {
-                alert("The cloud database is not connected yet. Please check the bottom-left corner for errors.");
-                return;
-            }
-
-            const btn = document.getElementById('postBtn');
-            const statusToast = document.getElementById('statusMsg');
-            btn.innerText = "Posting...";
-            btn.disabled = true;
-
-            try {
+                // Listen for Wishes
                 const wishesRef = collection(db, 'artifacts', appId, 'public', 'data', 'team_wishes');
-                await addDoc(wishesRef, { 
-                    name, 
-                    wish, 
-                    userId: currentUser.uid, 
-                    timestamp: serverTimestamp() 
+                onSnapshot(wishesRef, (snapshot) => {
+                    const docs = [];
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        docs.push({ ...data, timestamp: data.timestamp?.seconds * 1000 || Date.now() });
+                    });
+                    renderWishes(docs);
                 });
-                
-                document.getElementById('wishInput').value = '';
-                statusToast.style.display = 'block';
-                setTimeout(() => statusToast.style.display = 'none', 3000);
-            } catch (e) { 
-                console.error("Save Error:", e);
-                alert("Error saving your wish. Make sure your Firestore Rules allow 'write'.");
-            } finally {
-                btn.innerText = "Post Wish";
-                btn.disabled = false;
             }
+        });
+    } catch (e) {
+        updateDebug("Config Error ❌", "#dc2626");
+    }
 
-            localStorage.setItem('sankranthi_user_name', name);
-        };
+    // --- UI Effects ---
+    const savedName = localStorage.getItem('sankranthi_user_name');
+    if (savedName) document.getElementById('userName').value = savedName;
 
-        // Remember user name
-        const savedName = localStorage.getItem('sankranthi_user_name');
-        if (savedName) document.getElementById('userName').value = savedName;
-
-        // Falling petals effect
-        setInterval(() => {
-            const p = document.createElement('div');
-            p.className = 'petal';
-            p.style.width = p.style.height = (Math.random()*15+10)+'px';
-            p.style.backgroundColor = ['#f97316', '#fbbf24', '#db2777', '#16a34a'][Math.floor(Math.random()*4)];
-            p.style.left = Math.random()*100+'vw';
-            p.style.borderRadius = '50% 0 50% 50%';
-            p.style.animationDuration = (Math.random()*3+4)+'s';
-            document.getElementById('petal-container').appendChild(p);
-            setTimeout(() => p.remove(), 7000);
-        }, 450);
-    </script>
+    // Petal Generator
+    setInterval(() => {
+        const container = document.getElementById('petal-container');
+        if(!container) return;
+        const p = document.createElement('div');
+        p.className = 'petal';
+        p.style.width = p.style.height = (Math.random()*15+10)+'px';
+        p.style.backgroundColor = ['#f97316', '#fbbf24', '#db2777', '#16a34a'][Math.floor(Math.random()*4)];
+        p.style.left = Math.random()*100+'vw';
+        p.style.borderRadius = '50% 0 50% 50%';
+        p.style.animationDuration = (Math.random()*3+4)+'s';
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 7000);
+    }, 450);
+</script>
 </body>
 </html>
-
 
 
 
